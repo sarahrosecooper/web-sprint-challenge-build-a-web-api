@@ -3,6 +3,7 @@ play this: https://www.youtube.com/watch?v=d-diB65scQU
 
 Sing along:
 
+// first commit
 here's a little code I wrote, please read the README word for word, don't worry, you got this
 in every task there may be trouble, but if you worry you make it double, don't worry, you got this
 ain't got no sense of what is REST? just concentrate on learning Express, don't worry, you got this
