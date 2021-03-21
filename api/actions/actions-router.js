@@ -21,9 +21,55 @@ router.get("/", async (req, res, next) => {
     next({ error: err, message: err.message, status: 500 });
   }
 });
+
 // [GET] /api/actions/:id returns an action with the given id as the body of the response.
+
+router.get("/:id", MW.validateActionId, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const action = await Actions.get(id);
+    res.status(200).json(action);
+  } catch (err) {
+    next({ error: err, message: err.message, status: 500 });
+  }
+});
 // [POST] /api/actions returns the newly created action as the body of the response.
+
+router.post("/", MW.validateActionBody, async (req, res, next) => {
+  try {
+    const newAction = await Actions.insert(req.body);
+    res.status(20).json(newAction);
+  } catch (err) {
+    next({ error: err, message: err.message, status: 500 });
+  }
+});
 // [PUT] /api/actions/:id returns the updated action as the body of the response.
+
+router.put(
+  "/:id",
+  MW.validateActionId,
+  MW.validateActionBody,
+  async (req, res, next) => {
+    const { id } = req.params;
+    const changes = req.body;
+    try {
+      const updatedAction = await Actions.update(id, changes);
+      res.status(200).json(updatedAction);
+    } catch (err) {
+      next({ error: err, message: err.message, status: 500 });
+    }
+  }
+);
 // [DELETE] /api/actions/:id returns no response body
+
+router.delete("/:id", MW.validateActionId, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const action = await Actions.remove(id);
+    res.status(204).json(action);
+  } catch (err) {
+    next({ error: err, message: err.message, status: 500 });
+  }
+});
 
 module.exports = router;
